@@ -28,7 +28,7 @@ namespace Saurus
         public Boolean TryGetValue(BitBoard i_position, out PositionMetadata o_metadata)
         {
             o_metadata = m_positions[hash(i_position)];
-            if (o_metadata == null)
+            if (o_metadata == null || !i_position.Equals(o_metadata.m_board))
             {
                 return false;
             }

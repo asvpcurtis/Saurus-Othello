@@ -81,7 +81,7 @@ namespace Saurus
                     BitBoard sucessor = BitBoard.getSuccessor(i_board, move);
                     PositionMetadata metadata;
                     Int32 eval;
-                    if (!m_table.TryGetValue(sucessor, out metadata))
+                    if (!m_table.TryGetValue(sucessor, out metadata) && metadata.m_currentDepth == i_currDepth)
                     {
                         eval = AlphaBetaPruning(sucessor, ref subBestMove, i_startDepth, i_currDepth + 1, i_depthLeft - 1, i_a, i_b);
                         metadata = new PositionMetadata(sucessor, eval, i_startDepth, i_currDepth, i_currDepth + i_depthLeft);
@@ -100,12 +100,57 @@ namespace Saurus
                 }
                 return i_b;
             }
-
         }
         
         private static void SortMoves(BitBoard i_curPos, List<UInt64> i_moveList)
         {
+            List<PositionMetadata> posList = new List<PositionMetadata>();
+            if (i_curPos.m_blackTurn)
+            {
+                foreach (UInt64 move in i_moveList)
+                {
+                    BitBoard sucessor = BitBoard.getSuccessor(i_curPos, move);
+                    PositionMetadata metadata;
+                    if (!m_table.TryGetValue(sucessor, out metadata))
+                    {
+                        metadata = new PositionMetadata(sucessor, Saurus.SoftEval(sucessor), 0, 0, 0);
+                    }
+                    posList.Add(metadata);
+                }
+            }
+            else
+            {
+                foreach (UInt64 move in i_moveList)
+                {
+                    BitBoard sucessor = BitBoard.getSuccessor(i_curPos, move);
+                    PositionMetadata metadata;
+                    if (!m_table.TryGetValue(sucessor, out metadata))
+                    {
+                        metadata = new PositionMetadata(sucessor, Saurus.SoftEval(sucessor), 0, 0, 0);
+                    }
+                    posList.Add(metadata);
+                }
+            }
 
+            for (int i = 0; i < i_moveList.Count - 1; i++)
+            {
+                int j = i + 1;
+
+                while (j > 0)
+                {
+                    if (posList[j - 1].CompareTo(posList[j]) < 0)
+                    {
+                        PositionMetadata tempPos = posList[j - 1];
+                        posList[j - 1] = posList[j];
+                        posList[j] = tempPos;
+
+                        UInt64 tempMove = i_moveList[j - 1];
+                        i_moveList[j - 1] = i_moveList[j];
+                        i_moveList[j] = tempMove;
+                    }
+                    j--;
+                }
+            }
         }
         
     }
