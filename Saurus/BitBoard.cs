@@ -305,5 +305,29 @@ namespace Saurus
         {
             return m_black == i_other.m_black && m_white == i_other.m_white && m_blackTurn == i_other.m_blackTurn;
         }
+
+        public static List<UInt64> moveList(BitBoard i_board)
+        {
+            UInt64 moves = BitBoard.getMoves(i_board);
+
+            List<UInt64> moveList = new List<UInt64>();
+            while (moves != 0)
+            {
+                ulong temp = moves;
+                moves = moves & (moves - 1); // clears least significant bit
+                moveList.Add(temp ^ moves); // stores least significant bit by itself
+            }
+            return moveList;
+        }
+        public static Int32 countSetBits(UInt64 i_board)
+        {
+            Int32 count = 0;
+            while (i_board != 0)
+            {
+                count++;
+                i_board &= i_board - 1;
+            }
+            return count;
+        }
     }
 }
