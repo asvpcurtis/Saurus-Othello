@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Saurus
 {
-    public struct BitBoard
+    public struct BitBoard : IEquatable<BitBoard>
     {
         private const UInt64 R_SHIFT_MASK = 0x7f7f7f7f7f7f7f7f;
         private const UInt64 L_SHIFT_MASK = 0xfefefefefefefefe;
@@ -65,11 +65,7 @@ namespace Saurus
             return (int)(whiteKey ^ blackKey);
         }
 
-        public override Boolean Equals(object obj)
-        {
-            if (obj == null | !(obj is BitBoard)) return false;
-            return (((BitBoard)obj).m_black == m_black) && (((BitBoard)obj).m_white == m_white) && (((BitBoard)obj).m_blackTurn == m_blackTurn);
-        }
+       
         public static UInt64 getMoves(BitBoard i_curPos)
         {
             //retrieve information
@@ -303,6 +299,11 @@ namespace Saurus
                 return false;
             return true;
 
+        }
+
+        public Boolean Equals(BitBoard i_other)
+        {
+            return m_black == i_other.m_black && m_white == i_other.m_white && m_blackTurn == i_other.m_blackTurn;
         }
     }
 }
