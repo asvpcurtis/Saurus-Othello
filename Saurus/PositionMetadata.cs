@@ -42,4 +42,5 @@ namespace Saurus
         {
             return m_board.GetHashCode();
         }
+    }
 }
