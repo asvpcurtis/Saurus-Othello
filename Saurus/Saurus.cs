@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Saurus
@@ -9,6 +10,9 @@ namespace Saurus
     class Saurus : IPlayer
     {
         private static TranspositionTable m_table;
+        public CancellationTokenSource m_tokenSource;
+        public CancellationToken m_token;
+        public Task m_think;
         public Saurus()
         {
             m_table = new TranspositionTable(1024*1024);
@@ -17,9 +21,18 @@ namespace Saurus
         {
             //Task thinking;
             //thinking = Task.Run(() => move(ref mainBoard, moveList));
+            m_tokenSource = new CancellationTokenSource();
+            m_token = m_tokenSource.Token;
+            m_think = Task.Run(() =>
+            {
+            },m_tokenSource.Token);
+
+            m_tokenSource.Cancel();
+        }
+        public void cancelAsync()
+        {
             throw new NotImplementedException();
         }
-
         public void Report(int value)
         {
             throw new NotImplementedException();
@@ -152,6 +165,5 @@ namespace Saurus
                 }
             }
         }
-        
     }
 }

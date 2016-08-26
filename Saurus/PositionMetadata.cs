@@ -22,6 +22,10 @@ namespace Saurus
         public PositionMetadata(BitBoard i_board, Int32 i_eval, Int32 i_startDepth, Int32 i_currentDepth, Int32 i_endDepth)
         {
             m_board = i_board;
+            if (BitBoard.canMove(m_board))
+            {
+                m_board = BitBoard.switchTurns(m_board);
+            }
             m_eval = i_eval;
             m_startDepth = i_startDepth;
             m_currentDepth = i_currentDepth;

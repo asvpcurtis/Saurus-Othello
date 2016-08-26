@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Saurus
 {
-    public interface IPlayer : IProgress<Int32>
+    class Othello<B,W> where B : IPlayer where W : IPlayer
     {
-        void moveAsync();
-        void cancelAsync();
+        B blackPlayer;
+        W whitePlayer;
     }
-}
+}   

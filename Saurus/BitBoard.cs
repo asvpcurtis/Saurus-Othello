@@ -280,7 +280,18 @@ namespace Saurus
                 testBlack |= flippedDisks | i_moveMask;
                 testBlack &= ~flippedDisks;
             }
-            return new BitBoard(testBlack, testWhite, !i_curPos.m_blackTurn);
+            BitBoard temp = new BitBoard(testBlack, testWhite, !i_curPos.m_blackTurn);
+            /* if we want to check for ability to move here
+            if (BitBoard.getMoves(temp) == 0)
+            {
+                return temp;
+            }
+            else
+            {
+                return new BitBoard(testBlack, testWhite, i_curPos.m_blackTurn);
+            }
+            */
+            return temp;
         }
         public static BitBoard switchTurns(BitBoard i_curPos)
         {

@@ -8,6 +8,11 @@ namespace Saurus
 {
     class Human : IPlayer
     {
+        public void cancelAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public void moveAsync()
         {
             throw new NotImplementedException();
