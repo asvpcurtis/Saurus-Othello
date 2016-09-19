@@ -6,9 +6,27 @@ using System.Threading.Tasks;
 
 namespace Saurus
 {
-    class Othello<B,W> where B : IPlayer where W : IPlayer
+    /*
+    public class Othello
     {
-        B blackPlayer;
-        W whitePlayer;
+        IPlayer m_blackPlayer;
+        IPlayer m_whitePlayer;
+        BoardHistory m_board;
+
+        public Othello()
+        {
+            m_blackPlayer = new Human();
+            m_whitePlayer = new Human();
+            m_board = new BoardHistory();
+        }
+
+        void gameloop()
+        {
+            if (true)
+            {
+            }
+        }
+
     }
+    */
 }   

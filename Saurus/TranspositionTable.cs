@@ -9,12 +9,14 @@ namespace Saurus
 {
     class TranspositionTable
     {
-        int m_capacity;
-        int m_count;
+        Int32 m_capacity;
+        Int32 m_count;
         PositionMetadata[] m_positions;
 
         public TranspositionTable(int i_capacity)
         {
+            m_capacity = i_capacity;
+            m_count = 0;
             m_positions = new PositionMetadata[i_capacity];
         }
         private Int32 hash(BitBoard i_position)
@@ -60,7 +62,16 @@ namespace Saurus
             }
             */
             #endregion
-            m_positions[hash(i_position)] = i_position;
+            if (m_positions[hash(i_position) % m_capacity] == null)
+            {
+                m_count++;
+            }
+            m_positions[hash(i_position) % m_capacity] = i_position;
+        }
+
+        Int32 Count()
+        {
+            return m_count;
         }
 
         

@@ -8,7 +8,7 @@ namespace Saurus
 {
     public interface IPlayer : IProgress<Int32>
     {
-        void moveAsync();
+        void moveAsync(BoardHistory i_board);
         void cancelAsync();
     }
 }

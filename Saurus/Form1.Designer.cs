@@ -1,6 +1,6 @@
 ﻿namespace Saurus
 {
-    partial class Form1
+    partial class SaurusForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.boardPbx = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.boardPbx)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // boardPbx
+            // 
+            
+            this.boardPbx.Location = new System.Drawing.Point(159, 140);
+            this.boardPbx.Name = "boardPbx";
+            this.boardPbx.Size = new System.Drawing.Size(600, 600);
+            this.boardPbx.TabIndex = 0;
+            this.boardPbx.TabStop = false;
+            this.boardPbx.Click += new System.EventHandler(this.boardPbx_Click);
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(974, 929);
+            this.Controls.Add(this.boardPbx);
+            this.Name = "Saurus";
+            this.Text = "Saurus";
+            ((System.ComponentModel.ISupportInitialize)(this.boardPbx)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.PictureBox boardPbx;
     }
 }
 

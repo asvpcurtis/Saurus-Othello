@@ -14,7 +14,7 @@ namespace Saurus
 
         public BoardHistory()
         {
-            m_history = new BitBoard[61];
+            m_history = new BitBoard[61]; // 60 moves are possible we also want to store the starting position as well making 61
             m_history[0] = BitBoard.newGame();
             m_numMoves = 0;
             m_moveIndex = 0;
@@ -46,6 +46,10 @@ namespace Saurus
         public BitBoard getBoard()
         {
             return m_history[m_moveIndex];
+        }
+        public Int32 getMoveNumber()
+        {
+            return m_moveIndex;
         }
         public Boolean undo()
         {
