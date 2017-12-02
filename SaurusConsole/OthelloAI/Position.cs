@@ -7,7 +7,7 @@ namespace SaurusConsole.OthelloAI
     /// <summary>
     /// Represents an Othello Position
     /// </summary>
-    class Position
+    public class Position
     {
         private const ulong R_SHIFT_MASK = 0x7f7f7f7f7f7f7f7f;
         private const ulong L_SHIFT_MASK = 0xfefefefefefefefe;
@@ -28,8 +28,8 @@ namespace SaurusConsole.OthelloAI
         {
             if (fen == "startpos")
             {
-                white = 0x0000001008000000;
-                black = 0x0000008001000000;
+                white = 0x0000000810000000;
+                black = 0x0000001008000000;
                 blackTurn = true;
                 return;
             }
@@ -42,10 +42,13 @@ namespace SaurusConsole.OthelloAI
             switch (fen[65])
             {
                 case 'b':
+                    blackTurn = true;
                     break;
                 case 'w':
+                    blackTurn = false;
                     break;
                 case '_':
+                    gameOver = true;
                     break;
                 default:
                     break;
@@ -68,7 +71,15 @@ namespace SaurusConsole.OthelloAI
                         throw new Exception();
                 }
             }
-
+            if (GetLegalMovesMask() == 0)
+            {
+                blackTurn = !blackTurn;
+                if (GetLegalMovesMask() == 0)
+                {
+                    blackTurn = !blackTurn;
+                    gameOver = true;
+                }
+            }
         }
         private ulong GetLegalMovesMask()
         {

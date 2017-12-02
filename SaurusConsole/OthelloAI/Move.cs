@@ -26,6 +26,13 @@ namespace SaurusConsole.OthelloAI
             this.move = move;
             move = 0;
         }
+        public Move(string notation)
+        {
+            // input not validated to prevent performance hit
+            int col = Convert.ToInt32(notation[0] - 65);
+            int row = Convert.ToInt32(notation[1] - 49);
+            this.move = (ulong)1 << (row * 8 - col + 7);
+        }
 
         /// <summary>
         /// Gets the move in co-ordinate notation Example: A5
