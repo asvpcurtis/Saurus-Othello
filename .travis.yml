@@ -5,3 +5,4 @@ dist: trusty
 script:
  - dotnet restore
  - dotnet build SaurusConsole/SaurusConsole.csproj
+ - dotnet test SaurusConsole.Tests/SaurusConsole.Tests.csproj
