@@ -22,6 +22,7 @@ namespace SaurusConsoleTests
 
             Move h8move = new Move("H8");
             Assert.AreEqual("H8", h8move.ToString());
+            Assert.Fail();
         }
 
         [TestMethod]
