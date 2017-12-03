@@ -1,4 +1,5 @@
 MIT License
+======================
 
 Copyright (c) 2016 plzb0ss
 
