@@ -1,2 +1,6 @@
 language: csharp
-solution: SaurusConsole.sln
+mono: none
+dotnet: 2.0.3
+dist: trusty
+script:
+ - dotnet restore
