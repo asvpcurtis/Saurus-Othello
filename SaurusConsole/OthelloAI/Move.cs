@@ -18,7 +18,7 @@ namespace SaurusConsole.OthelloAI
         /// <param name="move"></param>
         public Move(ulong move)
         {
-            // Input not validated to avoid a performance hit
+            // Input not validated to prevent performance hit
             //if ((move == 0) || ((move & (move - 1)) != 0))
             //{
             //    throw new ArgumentException();
@@ -72,6 +72,36 @@ namespace SaurusConsole.OthelloAI
         public ulong GetBitMask()
         {
             return move;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, null) || !(obj is Move))
+            {
+                return false;
+            }
+
+            Move pos = (Move)obj;
+            return move == pos.move;
+        }
+
+        public override int GetHashCode()
+        {
+            return move.GetHashCode();
+        }
+
+        public static bool operator ==(Move left, Move right)
+        {
+            if (!ReferenceEquals(left, null) && !ReferenceEquals(right, null))
+            {
+                return left.Equals(right);
+            }
+            return ReferenceEquals(left, null) && ReferenceEquals(right, null);
+        }
+
+        public static bool operator !=(Move left, Move right)
+        {
+            return !(left == right);
         }
     }
 }

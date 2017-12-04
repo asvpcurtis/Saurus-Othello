@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using SaurusConsole.OthelloAI;
+using System.Linq;
 namespace SaurusConsole
 {
     /// <summary>
@@ -35,6 +36,9 @@ namespace SaurusConsole
                 case "pos":
                     return PosHandler(split);
 
+                case "move":
+                    return MoveHandler(split);
+
                 case "stop":
                     tokenSource.Cancel();
                     return "done!";
@@ -45,6 +49,7 @@ namespace SaurusConsole
                 case "help":
                     return "go depth <int>       -> Search current position by depth for best move and evaluation\n" 
                         + "pos [startpos|<fen>] -> Set the position\n"
+                        + "move <co-ords>       -> Make the move on the position\n"
                         + "stop                 -> Stops searching the position\n"
                         + "about                -> Get information about the engine\n"
                         + "help                 -> List all the commands\n"
@@ -52,6 +57,29 @@ namespace SaurusConsole
                         + "exit                 -> Terminate the process";
                 default:
                     return $"Unknown Command {split[0]}";
+            }
+        }
+
+        private string MoveHandler(string[] split)
+        {
+            if (split.Length < 2)
+            {
+                return "Move required";
+            }
+            string move = split[1].ToUpper();
+            if (move.Length == 2 && "ABCDEFGH".Contains(move[0]) && "12345678".Contains(move[1]))
+            {
+                Move temp = new Move(move);
+                if (!ai.GetPosition().GetLegalMoves().Contains(temp))
+                {
+                    return "Not a legal move";
+                }
+                ai.SetPosition(ai.GetPosition().MakeMove(temp));
+                return "done!";
+            }
+            else
+            {
+                return $"{split[1]} is not recognized as a move";
             }
         }
 
@@ -70,11 +98,11 @@ namespace SaurusConsole
                     }
                     else if (int.TryParse(split[2], out int depth))
                     {
-                        Task<(int eval, List<Move> pv)> depthSearch =  ai.GoDepth(depth, tokenSource.Token);
-                        var answer = await depthSearch;
-                        Console.WriteLine("here");
-                        Console.ReadKey();
-                        return $"{answer}";
+                        Task<(int, List<Move>)> task = ai.GoDepth(depth, tokenSource.Token);
+                        task.Wait();
+                        (int eval, List<Move> pv) answer = await task;
+
+                        return $"{answer.eval}: {ParsePV(answer.pv)}";
                     }
                     else
                     {
@@ -91,8 +119,22 @@ namespace SaurusConsole
             {
                 return "Position required";
             }
-            ai.SetPosition(split[1]);
+            ai.SetPosition(new Position(split[1]));
             return "done!";
+        }
+
+        private string ParsePV(IEnumerable<Move> pv)
+        {
+            string pvString = "";
+            foreach(Move move in pv)
+            {
+                pvString += $"{move}, ";
+            }
+            if (pv.Count() > 0)
+            {
+                pvString = pvString.Substring(0, pvString.Length - 2);
+            }
+            return pvString;
         }
 
         /// <summary>

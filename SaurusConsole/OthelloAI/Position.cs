@@ -355,5 +355,41 @@ namespace SaurusConsole.OthelloAI
         {
             return blackTurn;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, null) || !(obj is Position))
+            {
+                return false;
+            }
+
+            Position pos = (Position)obj;
+            return pos.blackTurn == blackTurn && pos.black == black && pos.white == white;
+        }
+
+        public override int GetHashCode()
+        {
+            if (blackTurn)
+            {
+                return black.GetHashCode() ^ white.GetHashCode();
+            }
+            else
+            {
+                return ~(black.GetHashCode() ^ white.GetHashCode());
+            }
+        }
+
+        public static bool operator ==(Position left, Position right)
+        {
+            if (!ReferenceEquals(left, null) && !ReferenceEquals(right, null))
+            {
+                return left.Equals(right);
+            }
+            return ReferenceEquals(left, null) && ReferenceEquals(right, null);
+        }
+        public static bool operator !=(Position left, Position right)
+        {
+            return !(left == right);
+        }
     }
 }

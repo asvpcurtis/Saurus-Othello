@@ -80,9 +80,30 @@ namespace SaurusConsoleTests
             Position newPos = pos.MakeMove(new Move("D3"));
             Assert.AreEqual(false, newPos.BlackTurn());
             Assert.AreEqual((ulong)0x0000000800000000, newPos.GetWhiteBitMask());
-
             Assert.AreEqual((ulong)0x0000001018100000, newPos.GetBlackBitMask());
+        }
 
+        [TestMethod]
+        public void EqualsTest()
+        {
+            Position pos = new Position("startpos");
+            Position same = new Position("startpos");
+            Assert.IsTrue(pos.Equals(same));
+            Assert.IsTrue(pos == same);
+            Assert.IsFalse(pos != same);
+
+            Position different = same.MakeMove(new Move("D3"));
+            Assert.IsFalse(pos.Equals(different));
+            Assert.IsFalse(pos == different);
+            Assert.IsTrue(pos != different);
+        }
+
+        [TestMethod]
+        public void GetHashCodeTest()
+        {
+            Position pos = new Position("startpos");
+            Position same = new Position("startpos");
+            Assert.IsTrue(pos.GetHashCode() == same.GetHashCode());
         }
     }
 }
