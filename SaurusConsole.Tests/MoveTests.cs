@@ -43,5 +43,28 @@ namespace SaurusConsoleTests
             Move move = new Move(mask);
             Assert.AreEqual(mask, move.GetBitMask());
         }
+
+        [TestMethod]
+        public void EqualsTest()
+        {
+            Move move = new Move("E4");
+            Move same = new Move("E4");
+            Assert.IsTrue(move.Equals(same));
+            Assert.IsTrue(move == same);
+            Assert.IsFalse(move != same);
+
+            Move different = new Move("D3");
+            Assert.IsFalse(move.Equals(different));
+            Assert.IsFalse(move == different);
+            Assert.IsTrue(move != different);
+        }
+
+        [TestMethod]
+        public void GetHashCodeTest()
+        {
+            Move move = new Move("E4");
+            Move same = new Move("E4");
+            Assert.IsTrue(move.GetHashCode() == same.GetHashCode());
+        }
     }
 }

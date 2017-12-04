@@ -12,10 +12,16 @@ namespace SaurusConsole.OthelloAI
     interface IOthelloAI
     {
         /// <summary>
-        /// Sets the board state by fenstring
+        /// Sets the board state
         /// </summary>
-        /// <param name="fen">The fenstring to set the postion to</param>
-        void SetPosition(string fen);
+        /// <param name="fen">The new position</param>
+        void SetPosition(Position fen);
+
+        /// <summary>
+        /// Gets the current position of the engine
+        /// </summary>
+        /// <returns>The position the engine is analyzing</returns>
+        Position GetPosition();
 
         /// <summary>
         /// Search the current position to a given depth
@@ -26,7 +32,7 @@ namespace SaurusConsole.OthelloAI
         Task<(int eval, List<Move> pv)> GoDepth(int depth, CancellationToken token);
 
         /// <summary>
-        /// Get information about the Engine
+        /// Get information about the engine
         /// </summary>
         /// <returns>information about the engine</returns>
         string About();

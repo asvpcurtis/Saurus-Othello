@@ -46,9 +46,18 @@ namespace SaurusConsole.OthelloAI
         /// Change the position for the Engine to work with
         /// </summary>
         /// <param name="pos">The new position</param>
-        public void SetPosition(string pos)
+        public void SetPosition(Position pos)
         {
-            currPos = new Position(pos);
+            currPos = pos;
+        }
+
+        /// <summary>
+        /// Gets the current position of the engine
+        /// </summary>
+        /// <returns></returns>
+        public Position GetPosition()
+        {
+            return currPos;
         }
 
         private (int eval, List<Move> pv) AlphaBetaSearch(int a, int b, int depth, Position pos, CancellationToken token)
@@ -59,7 +68,7 @@ namespace SaurusConsole.OthelloAI
             }
             // There should be always be atleast 1 move if the game is not over since Position knows who's turn it is
             IEnumerable<Move> moves = pos.GetLegalMoves();
-            //SortMoves(moves, pos);
+            moves = SortMoves(moves, pos);
             if (pos.BlackTurn())
             {
                 (int eval, List<Move> pv) bestPV = (int.MinValue, null);
@@ -107,9 +116,9 @@ namespace SaurusConsole.OthelloAI
                 return bestPV;
             }
         }
-        private void SortMoves(IEnumerable<Move> moves, Position pos)
+        private IEnumerable<Move> SortMoves(IEnumerable<Move> moves, Position pos)
         {
-            moves.OrderBy(move => 
+            return moves.OrderBy(move => 
             {
                 pos.MakeMove(move);
                 return Evaluation(pos);
@@ -148,6 +157,16 @@ namespace SaurusConsole.OthelloAI
             }
             return mobility;
         }
+
+        //private int Corners(Position pos)
+        //{
+        //    const ulong CORNERS = 0x8100000000000081;
+        //    const ulong X_SQUARES = 0042000000004200;
+        //    const ulong C_SQUARES = 4281000000008142;
+        //    ulong black = pos.GetBlackBitMask();
+        //    ulong white = pos.GetWhiteBitMask();
+        //    return 0;
+        //}
 
     }
 }
