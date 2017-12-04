@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using SaurusConsole.OthelloAI;
+using System.Linq;
 namespace SaurusConsole
 {
     /// <summary>
@@ -72,9 +73,10 @@ namespace SaurusConsole
                     {
                         Task<(int eval, List<Move> pv)> depthSearch = ai.GoDepth(depth, tokenSource.Token);
                         Console.WriteLine("here");
-                        Console.ReadKey();
+                        //Console.ReadKey();
                         var answer = await depthSearch;
-                        return $"{answer}";
+                        Console.ReadKey();
+                        return $"{answer.eval}: {ParsePV(answer.pv)}";
                     }
                     else
                     {
@@ -93,6 +95,20 @@ namespace SaurusConsole
             }
             ai.SetPosition(split[1]);
             return "done!";
+        }
+
+        private string ParsePV(IEnumerable<Move> pv)
+        {
+            string pvString = "";
+            foreach(Move move in pv)
+            {
+                pvString += $"{move}, ";
+            }
+            if (pv.Count() > 0)
+            {
+                pvString = pvString.Substring(0, pvString.Length - 2);
+            }
+            return pvString;
         }
 
         /// <summary>

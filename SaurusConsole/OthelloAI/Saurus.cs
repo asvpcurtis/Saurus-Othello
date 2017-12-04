@@ -59,7 +59,7 @@ namespace SaurusConsole.OthelloAI
             }
             // There should be always be atleast 1 move if the game is not over since Position knows who's turn it is
             IEnumerable<Move> moves = pos.GetLegalMoves();
-            SortMoves(moves, pos);
+            //SortMoves(moves, pos);
             if (pos.BlackTurn())
             {
                 (int eval, List<Move> pv) bestPV = (int.MinValue, null);
@@ -67,18 +67,20 @@ namespace SaurusConsole.OthelloAI
                 {
                     Position branch = pos.MakeMove(move);
                     var result = AlphaBetaSearch(a, b, depth - 1, branch, token);
-                    if (result.eval > a)
+                    if (result.eval > bestPV.eval)
                     {
-                        a = result.eval;
                         result.pv.Insert(0, move);
                         bestPV = result;
+                    }
+                    if (bestPV.eval > a)
+                    {
+                        a = bestPV.eval;
                     }
                     if (b <= a)
                     {
                         break;
                     }
                 }
-
                 return bestPV;
             }
             else
@@ -88,21 +90,22 @@ namespace SaurusConsole.OthelloAI
                 {
                     Position branch = pos.MakeMove(move);
                     var result = AlphaBetaSearch(a, b, depth - 1, branch, token);
-                    if (result.eval < b)
+                    if (result.eval < bestPV.eval)
                     {
-                        b = result.eval;
                         result.pv.Insert(0, move);
                         bestPV = result;
+                    }
+                    if (bestPV.eval < b)
+                    {
+                        b = bestPV.eval;
                     }
                     if (b <= a)
                     {
                         break;
                     }
                 }
-
                 return bestPV;
             }
-            
         }
         private void SortMoves(IEnumerable<Move> moves, Position pos)
         {
