@@ -10,16 +10,30 @@ namespace SaurusConsole.OthelloAI
     class Saurus : IOthelloAI
     {
         Position currPos;
+
+        /// <summary>
+        /// Initializes a new instance of Saurus with the starting position
+        /// </summary>
         public Saurus()
         {
             currPos = new Position("startpos");
         }
 
+        /// <summary>
+        /// Gets information about the engine it's name version and author
+        /// </summary>
+        /// <returns></returns>
         public string About()
         {
             return "Saurus 1.0.0 - developed by Curtis Barlow-Wilkes";
         }
 
+        /// <summary>
+        /// Get the best principal variation and its evaluation
+        /// </summary>
+        /// <param name="depth">The depth to search the position to</param>
+        /// <param name="token">A cancellation token can be used to prematurely abandon the search</param>
+        /// <returns>A tuple containing an evaluation of the position and the pricipal variation</returns>
         public Task<(int eval, List<Move> pv)> GoDepth(int depth, CancellationToken token)
         {
             return Task.Run(() => 
@@ -27,6 +41,11 @@ namespace SaurusConsole.OthelloAI
                 return AlphaBetaSearch(int.MinValue, int.MaxValue, depth, currPos, token);
             }, token);
         }
+
+        /// <summary>
+        /// Change the position for the Engine to work with
+        /// </summary>
+        /// <param name="pos">The new position</param>
         public void SetPosition(string pos)
         {
             currPos = new Position(pos);

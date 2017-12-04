@@ -70,10 +70,10 @@ namespace SaurusConsole
                     }
                     else if (int.TryParse(split[2], out int depth))
                     {
-                        Task<(int eval, List<Move> pv)> depthSearch =  ai.GoDepth(depth, tokenSource.Token);
-                        var answer = await depthSearch;
+                        Task<(int eval, List<Move> pv)> depthSearch = ai.GoDepth(depth, tokenSource.Token);
                         Console.WriteLine("here");
                         Console.ReadKey();
+                        var answer = await depthSearch;
                         return $"{answer}";
                     }
                     else
