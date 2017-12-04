@@ -4,11 +4,11 @@ Saurus the C# Othello Engine.
 
 <img src="Saurus.png" width="400">
 
-## Purpose
+## Purpose :bulb:
 
 To provide a command line interface for Othello GUI's to utilize.
 
-## Usage
+## Usage :gem:
 
 1) Install [.NET Core 2](https://www.microsoft.com/net/download/).
 2) Open the command line.
@@ -16,16 +16,16 @@ To provide a command line interface for Othello GUI's to utilize.
 4) Run `dotnet run`.
 5) Enter `help` for further information.
 
-## How to Contribute
+## How to Contribute :wave:
 
 * Install [.NET Core 2](https://www.microsoft.com/net/download/).
 * Install [Visual Studio](https://www.visualstudio.com/downloads/).
 * Make a pull request to develop branch.
 
-## Contributors
+## Contributors :construction_worker:
 
 See the list of [contributors](https://github.com/plzb0ss/Saurus-Othello/graphs/contributors) who worked on this project
 
-## License
+## License :book:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
